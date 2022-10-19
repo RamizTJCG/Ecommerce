@@ -1,15 +1,5 @@
-const AuthController = require('./AuthController');
-const UserController = require('./UserController.js');
-const ProductController = require('./ProductController.js');
-const CartController = require('./CartController.js');
-const OrderController = require('./OrderController.js');
-const PaymentController = require('./PaymentController.js');
+const RegisterController = require('./RegisterController');
 
 module.exports = {
-    AuthController,
-    UserController,
-    ProductController,
-    CartController,
-    OrderController,
-    PaymentController
+    RegisterController
 }

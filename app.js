@@ -71,9 +71,9 @@ app.get('/logout',auth, async (req,res) => {
 //     res.render("register");
 // });
 
-app.get('/login',(req,res) => {
-    res.render("login");
-});
+// app.get('/login',(req,res) => {
+//     res.render("login");
+// });
 
 /* Submit Registration Form */
 app.post('/register',async(req,res) => {
