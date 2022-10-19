@@ -1,5 +1,7 @@
 
 const Register = require('../models/registers');
+const bcrypt = require('bcryptjs');
+
 
 
 const RegisterController = {
@@ -64,10 +66,10 @@ const RegisterController = {
             const email = req.body.email;
             const password = req.body.password;
             const emp = await Register.findOne({email});
-            
+
             const isMatch = await bcrypt.compare(password,emp.password);
             const token = await emp.genrateAuthToken();
-    
+                            
             res.cookie("jwt",token,{
                 expires: new Date(Date.now() + 30000000),
                 httpOnly:true,
@@ -83,6 +85,30 @@ const RegisterController = {
             res.status(400).send(e);
         }       
     },
+    async logout(req,res){
+        try {
+            console.log(req);
+            const token = req.cookies.jwt;
+            // req.user & req.tooken coming from middleware
+    
+            /* to logout from single device */
+            // req.user.tokens = req.user.tokens.filter((currElem) => {
+            //     return currElem.token !== req.token             
+            // });
+    
+            /* to logout from all devices */
+            req.user.tokens = [];
+    
+            res.clearCookie("jwt");
+            await req.user.save();       
+
+            res.redirect('/login');
+            // res.render("login");
+            
+        } catch (error) {
+            res.status(500).send(error);
+        }
+    }
 };
 
 module.exports = RegisterController; 
